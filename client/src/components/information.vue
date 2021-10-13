@@ -19,7 +19,7 @@ export default {
   async created(){
     try{
       const response = await authService.info();
-      this.msg = response.posts.title;
+      this.msg = response.data.posts.title;
     }catch(e){
       console.log(e)
     }
