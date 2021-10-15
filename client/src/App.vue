@@ -3,8 +3,12 @@
     <h1>Express Vue Authentication</h1>
     <img alt="Vue logo" src="./assets/logo.png">
     <div class="header">
-      <p class="auth" v-on:click="currentComponent = 'auth'">login</p>
-      <p class="register" v-on:click="currentComponent = 'register'">register</p>
+      <p class="auth" v-on:click="authentication">{{login_message}}</p>
+      <p 
+      v-show="!login_status"
+      class="register" 
+      v-on:click="currentComponent = 'register'"
+      >register</p>
     </div>
     <keep-alive>
       <component 
@@ -29,12 +33,32 @@ export default {
   },
   data(){
     return {
-      currentComponent:auth
+      currentComponent:auth,
+      login_status:false,
+      login_message:'login'
+    }
+  },
+  watch:{
+    login_status(){
+      if(this.login_status){
+        this.login_message = 'logout'
+      }else{
+        this.login_message = 'login'
+      }
     }
   },
   methods:{
     loginComplete(){
       this.currentComponent = information;
+      this.login_status = true;
+    },
+    authentication(){
+      if(this.login_status){
+        this.currentComponent = auth;
+        this.login_status = false;
+      }else{
+        this.currentComponent = auth;
+      }
     }
   }
 }
